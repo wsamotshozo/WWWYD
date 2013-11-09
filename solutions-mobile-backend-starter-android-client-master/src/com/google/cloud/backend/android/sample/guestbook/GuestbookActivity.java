@@ -13,8 +13,14 @@
  */
 package com.google.cloud.backend.android.sample.guestbook;
 
+import android.app.ActionBar;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -23,7 +29,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
+import android.widget.ViewSwitcher;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.cloud.backend.android.CloudBackendActivity;
 import com.google.cloud.backend.android.CloudCallbackHandler;
 import com.google.cloud.backend.android.CloudEntity;
@@ -41,7 +51,7 @@ import java.util.Locale;
  * Sample Guestbook app with Mobile Backend Starter.
  *
  */
-public class GuestbookActivity extends CloudBackendActivity implements OnItemSelectedListener {
+public class GuestbookActivity extends CloudBackendActivity implements OnItemSelectedListener, OnClickListener {
 
   // data formatter for formatting createdAt property
   private static final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss ", Locale.US);
@@ -55,6 +65,9 @@ public class GuestbookActivity extends CloudBackendActivity implements OnItemSel
   private EditText etMessage;
   private Button btSend;
   private Spinner category;
+  private ToggleButton toggle;
+  private ViewSwitcher vswitch;
+  private GoogleMap map;
 
   // a list of posts on the UI
   List<CloudEntity> posts = new LinkedList<CloudEntity>();
@@ -64,6 +77,7 @@ public class GuestbookActivity extends CloudBackendActivity implements OnItemSel
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+    //
     tvPosts = (TextView) findViewById(R.id.tvPosts);
     etMessage = (EditText) findViewById(R.id.etMessage);
     btSend = (Button) findViewById(R.id.btSend);
@@ -73,7 +87,28 @@ public class GuestbookActivity extends CloudBackendActivity implements OnItemSel
     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     category.setAdapter(adapter);
     category.setOnItemSelectedListener(this);
+    toggle = (ToggleButton)findViewById(R.id.toggle);
+    toggle.setOnClickListener(this);
+    vswitch = (ViewSwitcher)findViewById(R.id.profileSwitcher);
+    /*map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+    map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+    setUpMapIfNeeded();*/
+    //FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+    //fragmentTransaction.add(R.id.map, map);
+    //fragmentTransaction.commit();
   }
+  /*private void setUpMapIfNeeded() {
+	    // Do a null check to confirm that we have not already instantiated the map.
+	    if (map == null) {
+	        map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
+	                            .getMap();
+	        // Check if we were successful in obtaining the map.
+	        if (map != null) {
+	            // The Map is verified. It is now safe to manipulate the map.
+
+	        }
+	    }
+	}*/
 
   @Override
   protected void onPostCreate() {
@@ -180,4 +215,26 @@ public void onNothingSelected(AdapterView<?> arg0) {
 	// TODO Auto-generated method stub
 	
 }
+
+@Override
+public void onClick(View v) {
+	// TODO Auto-generated method stub
+	if(v ==toggle)
+	{
+		if(((ToggleButton)v).isChecked())
+		{
+			vswitch.showNext();
+		}
+		else
+		{
+			vswitch.showPrevious();
+		}
+	}
+	else
+	{
+		
+	}
+	
 }
+}
+ 

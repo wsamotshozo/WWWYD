@@ -6,5 +6,6 @@
 	<classpathentry kind="src" path="endpoint-libs/libmobilebackend-v1/mobilebackend/mobilebackend-v1-generated-source"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
+	<classpathentry kind="lib" path="/home/wardell/Google App engine/adt-bundle-linux-x86_64-20131030/sdk/extras/google/google_play_services/libproject/google-play-services_lib/libs/google-play-services.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
