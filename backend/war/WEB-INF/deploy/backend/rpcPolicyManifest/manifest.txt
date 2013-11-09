@@ -1,0 +1,3 @@
+# Module backend
+# RPC service class, partial path of RPC policy file
+com.hello.backend.client.GreetingService, 88746CE77A82F77F904B3419BF906644.gwt.rpc

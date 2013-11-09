@@ -275,8 +275,10 @@ public class BackendConfigManager {
       return null;
     }
 
-    String data = base64String.substring(index + PKCS12_BASE64_PREFIX.length());
-    if (Base64.isBase64(data)) {
+    
+   String data = base64String.substring(index + PKCS12_BASE64_PREFIX.length());
+   if( Base64.isArrayByteBase64(data.getBytes())){ 
+   //if (Base64.isBase64(data)) {
       return new Text(data);
     } else {
       return null;

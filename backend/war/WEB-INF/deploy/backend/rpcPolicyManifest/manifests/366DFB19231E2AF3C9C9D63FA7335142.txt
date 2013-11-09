@@ -1,0 +1,2 @@
+serviceClass: com.hello.backend.client.GreetingService
+path: 88746CE77A82F77F904B3419BF906644.gwt.rpc
