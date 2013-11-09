@@ -15,8 +15,12 @@ package com.google.cloud.backend.android.sample.guestbook;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +41,7 @@ import java.util.Locale;
  * Sample Guestbook app with Mobile Backend Starter.
  *
  */
-public class GuestbookActivity extends CloudBackendActivity {
+public class GuestbookActivity extends CloudBackendActivity implements OnItemSelectedListener {
 
   // data formatter for formatting createdAt property
   private static final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss ", Locale.US);
@@ -50,6 +54,7 @@ public class GuestbookActivity extends CloudBackendActivity {
   private TextView tvPosts;
   private EditText etMessage;
   private Button btSend;
+  private Spinner category;
 
   // a list of posts on the UI
   List<CloudEntity> posts = new LinkedList<CloudEntity>();
@@ -62,17 +67,23 @@ public class GuestbookActivity extends CloudBackendActivity {
     tvPosts = (TextView) findViewById(R.id.tvPosts);
     etMessage = (EditText) findViewById(R.id.etMessage);
     btSend = (Button) findViewById(R.id.btSend);
+    category = (Spinner)findViewById(R.id.category);
+    ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+            R.array.activity_array, android.R.layout.simple_spinner_item);
+    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    category.setAdapter(adapter);
+    category.setOnItemSelectedListener(this);
   }
 
   @Override
   protected void onPostCreate() {
     super.onPostCreate();
-    listAllPosts();
+    listAllPosts("Guestbook");
   }
 
   // execute query "SELECT * FROM Guestbook ORDER BY _createdAt DESC LIMIT 50"
   // this query will be re-executed when matching entity is updated
-  private void listAllPosts() {
+  private void listAllPosts(String topic) {
 
     // create a response handler that will receive the query result or an error
     CloudCallbackHandler<List<CloudEntity>> handler = new CloudCallbackHandler<List<CloudEntity>>() {
@@ -89,7 +100,7 @@ public class GuestbookActivity extends CloudBackendActivity {
     };
 
     // execute the query with the handler
-    getCloudBackend().listByKind("Guestbook", CloudEntity.PROP_CREATED_AT, Order.DESC, 50,
+    getCloudBackend().listByKind(topic, CloudEntity.PROP_CREATED_AT, Order.DESC, 50,
         Scope.FUTURE_AND_PAST, handler);
   }
 
@@ -121,8 +132,9 @@ public class GuestbookActivity extends CloudBackendActivity {
   public void onSendButtonPressed(View view) {
 
     // create a CloudEntity with the new post
-    CloudEntity newPost = new CloudEntity("Guestbook");
-    newPost.put("message", etMessage.getText().toString());
+    CloudEntity newPost = new CloudEntity(category.getSelectedItem().toString().replace(" ", "_"));
+	//newPost.setKindName("_"+category.getSelectedItem().toString());
+    newPost.put("message", etMessage.getText().toString());	
 
     // create a response handler that will receive the result or an error
     CloudCallbackHandler<CloudEntity> handler = new CloudCallbackHandler<CloudEntity>() {
@@ -154,4 +166,18 @@ public class GuestbookActivity extends CloudBackendActivity {
       Toast.makeText(this, message, duration).show();
     }
   }
+
+@Override
+public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+	// TODO Auto-generated method stub
+	String [] items = getResources().getStringArray(R.array.activity_array);
+	//Toast.makeText(this, category.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+	listAllPosts(items[arg2].replace(" ","_"));
+}
+
+@Override
+public void onNothingSelected(AdapterView<?> arg0) {
+	// TODO Auto-generated method stub
+	
+}
 }

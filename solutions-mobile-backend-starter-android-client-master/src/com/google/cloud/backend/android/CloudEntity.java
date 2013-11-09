@@ -62,6 +62,9 @@ public class CloudEntity {
   private String updatedBy;
 
   private String kindName;
+  public String category;
+  
+  //private String category;
 
   private Map<String, Object> properties = new HashMap<String, Object>();
 
@@ -164,6 +167,9 @@ public class CloudEntity {
   public String getKindName() {
     return kindName;
   }
+  public String getCateogry() {
+	    return category;
+	  }
 
   public String getOwner() {
     return owner;

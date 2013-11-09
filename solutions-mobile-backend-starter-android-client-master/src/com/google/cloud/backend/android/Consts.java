@@ -23,17 +23,17 @@ public interface Consts {
   /**
    * Set Project ID of your Google APIs Console Project.
    */
-  public static final String PROJECT_ID = "generated-armor-393";
+  public static final String PROJECT_ID = "wydwes";
 
   /**
    * Set Project Number of your Google APIs Console Project.
    */
-  public static final String PROJECT_NUMBER = "236160239021";
+  public static final String PROJECT_NUMBER = "884663158864";
 
   /**
    * Set your Web Client ID for authentication at backend.
    */
-  public static final String WEB_CLIENT_ID = "*** ENTER YOUR WEB CLIENT ID ***";
+  public static final String WEB_CLIENT_ID = "884663158864.apps.googleusercontent.com";
 
   /**
    * Set default user authentication enabled or disabled.

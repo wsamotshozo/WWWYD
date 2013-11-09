@@ -7,5 +7,14 @@
     <string name="send">Send</string>
     <string name="sendMessage">sendMessage</string>
     <string name="emptystring"></string>
-
+    <string-array name="activity_array">
+        <item>Guestbook</item>
+        <item>Watching Game of Thrones</item>
+        <item>Watching Breaking Bad</item>
+        <item>Moutain Climbing</item>
+        <item>Hiking Mt. Everest</item>
+        <item>Cliff diving off the Grand Canyon</item>
+        <item>Singing with beyonce</item>
+        <item>dancing with mc hammer</item>
+    </string-array>
 </resources>
